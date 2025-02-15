@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h3>Request Details</h3>
+    </div>
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-3">Request Type</dt>
+            <dd class="col-sm-9">{{ service_request.get_request_type_display }}</dd>
+
+            <dt class="col-sm-3">Status</dt>
+            <dd class="col-sm-9">
+                <span class="badge bg-{% if service_request.status == 'RESOLVED' %}success{% elif service_request.status == 'IN_PROGRESS' %}warning{% else %}secondary{% endif %}">
+                    {{ service_request.get_status_display }}
+                </span>
+            </dd>
+
+            <dt class="col-sm-3">Submitted Date</dt>
+            <dd class="col-sm-9">{{ service_request.submitted_date|date:"M d, Y H:i" }}</dd>
+
+            {% if service_request.resolved_date %}
+            <dt class="col-sm-3">Resolved Date</dt>
+            <dd class="col-sm-9">{{ service_request.resolved_date|date:"M d, Y H:i" }}</dd>
+            {% endif %}
+
+            <dt class="col-sm-3">Description</dt>
+            <dd class="col-sm-9">{{ service_request.description }}</dd>
+
+            {% if service_request.attachment %}
+            <dt class="col-sm-3">Attachment</dt>
+            <dd class="col-sm-9">
+                <a href="{{ service_request.attachment.url }}" target="_blank" class="btn btn-sm btn-outline-primary">
+                    View Attachment
+                </a>
+            </dd>
+            {% endif %}
+        </dl>
+        <a href="{% url 'customer_dashboard' %}" class="btn btn-secondary">Back to Dashboard</a>
+    </div>
+</div>
+{% endblock %}

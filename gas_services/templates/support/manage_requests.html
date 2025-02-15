@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h2>Manage Service Requests</h2>
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Request Type</th>
+                        <th>Status</th>
+                        <th>Submitted Date</th>
+                        <th>Resolved Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for req in requests %}
+                    <tr>
+                        <td>{{ req.get_request_type_display }}</td>
+                        <td>
+                            <span class="badge bg-{% if req.status == 'RESOLVED' %}success{% elif req.status == 'IN_PROGRESS' %}warning{% else %}secondary{% endif %}">
+                                {{ req.get_status_display }}
+                            </span>
+                        </td>
+                        <td>{{ req.submitted_date|date:"M d, Y H:i" }}</td>
+                        <td>{{ req.resolved_date|date:"M d, Y H:i" }}</td>
+                        <td>
+                            <a href="{% url 'resolve_request' req.id %}" class="btn btn-primary btn-sm">Resolve</a>
+                            <a href="{% url 'view_request' req.id %}" class="btn btn-info btn-sm">View</a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" class="text-center">No requests found</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <a href="{% url 'dashboard' %}" class="btn btn-secondary mt-3">Back to Dashboard</a>
+    </div>
+    {% endblock %}

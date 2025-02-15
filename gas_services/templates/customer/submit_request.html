@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h3>Submit New Service Request</h3>
+    </div>
+    <div class="card-body">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label class="form-label">Request Type</label>
+                {{ form.request_type }}
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Description</label>
+                {{ form.description }}
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Attachment</label>
+                {{ form.attachment }}
+                <div class="form-text">Upload images or documents (max 5MB)</div>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit Request</button>
+            <a href="{% url 'customer_dashboard' %}" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

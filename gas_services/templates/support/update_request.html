@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h3>Update Service Request</h3>
+    </div>
+    <div class="card-body">
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label class="form-label">Status</label>
+                {{ form.status }}
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Resolved Date</label>
+                {{ form.resolved_date }}
+                <div class="form-text">Leave blank if not resolved</div>
+            </div>
+            <button type="submit" class="btn btn-primary">Update Request</button>
+            <a href="{% url 'support_dashboard' %}" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</div>
+{% endblock %}
